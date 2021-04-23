@@ -1,36 +1,12 @@
-import { Fragment } from "react";
-import { Container } from "react-bootstrap";
-import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
-import NavigationBar from "./components/NavigationBar";
-import Register from "./pages/account/Register";
-import Cards from "./pages/cards/Cards";
-import LandingPage from "./pages/landingpage/LandingPage";
-import Test from "./pages/Test";
+import express from 'express';
+import morgan from 'morgan';
+import helmet from 'helmet';
+import routes from './routes';
+import logger from './logger';
 
-function App() {
-  return (
-    <Fragment>
-      <Router>
-        <NavigationBar />
-        <Container>
-          <Switch>
-            <Route path="/cards">
-              <Cards />
-            </Route>
-            <Route path="/test">
-              <Test />
-            </Route>
-            <Route path="/register">
-              <Register />
-            </Route>
-            <Route path="/">
-              <LandingPage />
-            </Route>
-          </Switch>
-        </Container>
-      </Router>
-    </Fragment>
-  );
-}
+const app = express();
+app.use(helmet());
+app.use(morgan('combined', { stream: logger.stream }));
+app.use('/', routes);
 
-export default App;
+export default app;
