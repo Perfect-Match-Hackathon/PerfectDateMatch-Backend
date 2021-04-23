@@ -63,7 +63,8 @@
     "release": "npx standard-version --preset angular",
     "lint:ci": "npx eslint .",
     "lint:prettier": "npx prettier \"**/*.*\" --config .prettierrc.yaml --ignore-path .prettierignore",
-    "lint:prettier:fix": "npm run lint:prettier -- --write \"**/*.*\""
+    "lint:prettier:fix": "npm run lint:prettier -- --write \"**/*.*\"",
+    "postinstall": "yarn build"
   },
   "repository": {
     "type": "git",
