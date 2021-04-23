@@ -1,6 +1,6 @@
 {
   "name": "express-js-starter-kit",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "This project is created as a template for node.js web apps",
   "main": "src/server.js",
   "dependencies": {
