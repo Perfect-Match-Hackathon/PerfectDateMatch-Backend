@@ -1,4 +1,4 @@
 import './bootstrap';
 import app from './app';
 
-app.listen(process.env.APP_PORT);
+app.listen(process.env.APP_PORT || 8000);
