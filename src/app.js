@@ -1,3 +1,4 @@
+/* eslint-disable import/prefer-default-export */
 import express from 'express';
 import helmet from 'helmet';
 import routes from './routes';
@@ -9,4 +10,4 @@ app.use(express.json());
 app.use(express.urlencoded());
 app.use('/', routes);
 
-export default app;
+export { app };
