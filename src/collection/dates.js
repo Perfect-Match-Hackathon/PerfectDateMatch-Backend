@@ -7,15 +7,16 @@ const listDates = (req, res) => {
     .ref('/dates/')
     .on('value', val => {
       const id = res.locals.user.uid;
-      let filter = val.val();
-      filter = filter.filter(i => {
-        const { replies } = i;
-        return !replies || !replies[id];
+
+      const dates = {};
+      val.forEach(date => {
+        const { replies } = date.val();
+        if (!replies || !replies[id]) {
+          dates[date.key] = date.val();
+        }
       });
-      res.json({
-        message: `You're logged in as ${res.locals.user.email} with Firebase UID: ${res.locals.user.uid}`,
-        test: `${JSON.stringify(filter)}`,
-      });
+      // message: `You're logged in as ${res.locals.user.email} with Firebase UID: ${res.locals.user.uid}`,
+      res.json(dates);
     });
 };
 
