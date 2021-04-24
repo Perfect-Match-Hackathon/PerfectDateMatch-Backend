@@ -47,7 +47,6 @@ const selectDate = (req, res) => {
       .ref(`/dates/${req.params.id}/`)
       .on('value', val => {
         const date = val.val();
-        console.log(req.params.id);
         if (date) {
           delete date.response;
           res.json(date);
