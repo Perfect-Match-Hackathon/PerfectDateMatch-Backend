@@ -1,24 +1,23 @@
 /* eslint-disable import/prefer-default-export */
 const admin = require('firebase-admin');
 
-const listDates = (req, res) => {
-  admin
-    .database()
-    .ref('/dates')
-    .on('value', val => {
-      const id = res.locals.user.uid;
+const dateref = admin.database().ref(`/dates`);
 
-      const dates = {};
-      val.forEach(date => {
-        const { response } = date.val();
-        if (!response || !response[id]) {
-          const insert = date.val();
-          delete insert.response;
-          dates[date.key] = insert;
-        }
-      });
-      res.json(dates);
+const listDates = (req, res) => {
+  dateref.on('value', val => {
+    const id = res.locals.user.uid;
+
+    const dates = {};
+    val.forEach(date => {
+      const { response } = date.val();
+      if (!response || !response[id]) {
+        const insert = date.val();
+        delete insert.response;
+        dates[date.key] = insert;
+      }
     });
+    res.json(dates);
+  });
 };
 
 const listUserDates = (req, res) => {
@@ -113,7 +112,8 @@ const responseDate = (req, res) => {
           admin
             .database()
             .ref(`/dates/${req.params.id}/response/${res.locals.user.uid}`)
-            .set(req.params.response);
+            // eslint-disable-next-line eqeqeq
+            .set(req.params.response == 'true');
           res.json({ success: true });
         } else {
           res.json({ success: false, message: 'Date does not exist.' });
