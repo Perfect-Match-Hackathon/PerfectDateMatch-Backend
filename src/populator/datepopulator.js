@@ -1,7 +1,7 @@
 /* eslint-disable import/prefer-default-export */
 const admin = require('firebase-admin');
 
-const datepopulator = (req, res) => {
+const datePopulator = (req, res) => {
   const dates = {
     0: {
       title: 'Avatar',
@@ -38,4 +38,4 @@ const datepopulator = (req, res) => {
   res.json({});
 };
 
-export { datepopulator };
+export { datePopulator };

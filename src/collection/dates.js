@@ -10,8 +10,8 @@ const listDates = (req, res) => {
 
       const dates = {};
       val.forEach(date => {
-        const { replies } = date.val();
-        if (!replies || !replies[id]) {
+        const { response } = date.val();
+        if (!response || !response[id]) {
           dates[date.key] = date.val();
         }
       });
@@ -21,12 +21,48 @@ const listDates = (req, res) => {
 };
 
 // eslint-disable-next-line no-unused-vars
-const dateSearch = (req, res) => {
+const searchDate = (req, res) => {
   // eslint-disable-next-line no-empty
   try {
   } catch (error) {
-    // Do nothing
+    res.status(500).send({
+      message: `Error searching date ${req.params.id}`,
+    });
   }
 };
 
-export { listDates, dateSearch };
+// eslint-disable-next-line no-unused-vars
+const createDate = (req, res) => {
+  // eslint-disable-next-line no-empty
+  try {
+  } catch (error) {
+    res.status(500).send({
+      message: `Error creating date`,
+    });
+  }
+};
+
+const responseDate = (req, res) => {
+  try {
+    admin
+      .database()
+      .ref(`/dates/${req.params.id}`)
+      .once('value', snapshot => {
+        if (snapshot.exists()) {
+          admin
+            .database()
+            .ref(`/dates/${req.params.id}/response/${res.locals.user.uid}`)
+            .set(req.params.response);
+          res.json({ success: true });
+        } else {
+          res.json({ success: false });
+        }
+      });
+  } catch (error) {
+    res.status(500).send({
+      message: `Error replying to date ${req.params.id}`,
+    });
+  }
+};
+
+export { listDates, searchDate, responseDate, createDate };
