@@ -17,7 +17,6 @@ plugins:
   - prettier
   - prefer-arrow
   - jsdoc
-  - no-console
 rules:
   {
     prettier/prettier: ['error'],
