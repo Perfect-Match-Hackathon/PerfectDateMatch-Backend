@@ -4,7 +4,7 @@ const admin = require('firebase-admin');
 const listDates = (req, res) => {
   admin
     .database()
-    .ref('/dates/')
+    .ref('/dates')
     .on('value', val => {
       const id = res.locals.user.uid;
 
@@ -13,6 +13,26 @@ const listDates = (req, res) => {
         const { response } = date.val();
         if (!response || !response[id]) {
           dates[date.key] = date.val();
+        }
+      });
+      // message: `You're logged in as ${res.locals.user.email} with Firebase UID: ${res.locals.user.uid}`,
+      res.json(dates);
+    });
+};
+
+const listUserDates = (req, res) => {
+  const id = res.locals.user.uid;
+  admin
+    .database()
+    .ref('/dates')
+    .on('value', val => {
+      const dates = {};
+      val.forEach(date => {
+        const { response } = date.val();
+        if (response && response[id]) {
+          const insert = date.val();
+          delete insert.response;
+          dates[date.key] = insert;
         }
       });
       // message: `You're logged in as ${res.locals.user.email} with Firebase UID: ${res.locals.user.uid}`,
@@ -91,9 +111,9 @@ const responseDate = (req, res) => {
       });
   } catch (error) {
     res.status(500).send({
-      message: `Error replying to date ${req.params.id}`,
+      message: `Error responding to date ${req.params.id}`,
     });
   }
 };
 
-export { listDates, searchDate, responseDate, createDate };
+export { listDates, listUserDates, searchDate, responseDate, createDate };
