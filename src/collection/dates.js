@@ -31,9 +31,7 @@ const searchDate = (req, res) => {
   }
 };
 
-// eslint-disable-next-line no-unused-vars
 const createDate = (req, res) => {
-  // eslint-disable-next-line no-empty
   try {
     const date = {
       title: null,
@@ -52,19 +50,18 @@ const createDate = (req, res) => {
     });
 
     const db = admin.database();
-    let newid = 0;
     db.ref('dateid').transaction(
       dateid => {
-        newid = dateid + 1;
-        db.ref(`dates/${newid}`).set(date);
-        return newid;
+        return dateid + 1;
       },
-      (error, commited) => {
+      (error, commited, transaction) => {
         if (error) {
           throw error;
         } else if (!commited) {
-          throw new Error('Error creating date');
+          throw new Error('Error creating date.');
         } else {
+          const newid = transaction.val();
+          db.ref(`dates/${newid}`).set(date);
           res.json({ success: true, dateid: newid });
         }
       },
