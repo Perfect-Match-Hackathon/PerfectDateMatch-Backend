@@ -1,5 +1,5 @@
 import express from 'express';
-import { listDates, listUserDates, searchDate, responseDate, createDate } from '../collection';
+import { listDates, listUserDates, selectDate, responseDate, createDate } from '../collection';
 
 const firebaseMiddleware = require('express-firebase-middleware');
 
@@ -11,8 +11,8 @@ routes.use('/collection', firebaseMiddleware.auth);
 routes.get('/collection/dates/', listDates);
 // List a users accepted dates
 routes.get('/collection/dates/list/', listUserDates);
-// Search for a date by DateID
-routes.get('/collection/dates/:id', searchDate);
+// Retrieve data for a date by DateID
+routes.get('/collection/dates/:id', selectDate);
 
 // Respond true/false to a date
 routes.post('/collection/dates/response/:id/:response', responseDate);

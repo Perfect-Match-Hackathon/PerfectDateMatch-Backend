@@ -12,10 +12,11 @@ const listDates = (req, res) => {
       val.forEach(date => {
         const { response } = date.val();
         if (!response || !response[id]) {
-          dates[date.key] = date.val();
+          const insert = date.val();
+          delete insert.response;
+          dates[date.key] = insert;
         }
       });
-      // message: `You're logged in as ${res.locals.user.email} with Firebase UID: ${res.locals.user.uid}`,
       res.json(dates);
     });
 };
@@ -35,18 +36,27 @@ const listUserDates = (req, res) => {
           dates[date.key] = insert;
         }
       });
-      // message: `You're logged in as ${res.locals.user.email} with Firebase UID: ${res.locals.user.uid}`,
       res.json(dates);
     });
 };
 
-// eslint-disable-next-line no-unused-vars
-const searchDate = (req, res) => {
-  // eslint-disable-next-line no-empty
+const selectDate = (req, res) => {
   try {
+    admin
+      .database()
+      .ref(`/dates/${req.params.id}/`)
+      .on('value', val => {
+        const date = val.val();
+        if (date) {
+          delete date.response;
+          res.json(date);
+        } else {
+          res.json({});
+        }
+      });
   } catch (error) {
     res.status(500).send({
-      message: `Error searching date ${req.params.id}`,
+      message: `Error retrieving date ${req.params.id}`,
     });
   }
 };
@@ -116,4 +126,4 @@ const responseDate = (req, res) => {
   }
 };
 
-export { listDates, listUserDates, searchDate, responseDate, createDate };
+export { listDates, listUserDates, selectDate, responseDate, createDate };
