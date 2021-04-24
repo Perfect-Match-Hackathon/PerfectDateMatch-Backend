@@ -9,7 +9,6 @@
     "express-firebase-middleware": "^3.0.0",
     "firebase-admin": "^9.6.0",
     "helmet": "^3.21.2",
-    "mongoose": "^5.12.5",
     "morgan": "^1.9.1",
     "winston": "^3.2.1",
     "winston-daily-rotate-file": "^4.4.1"
