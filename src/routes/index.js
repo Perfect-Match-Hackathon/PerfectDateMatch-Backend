@@ -10,7 +10,7 @@ routes.use('/collection', firebaseMiddleware.auth);
 routes.get('/collection/dates/', listDates);
 routes.get('/collection/dates/:id', searchDate);
 routes.get('/collection/dates/response/:id/:response', responseDate);
-routes.get('/collection/dates/create', createDate);
+routes.post('/collection/dates/create', createDate);
 routes.get('/collection/populate', datePopulator);
 
 export default routes;

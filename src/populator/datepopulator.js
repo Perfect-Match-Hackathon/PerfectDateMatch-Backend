@@ -30,6 +30,7 @@ const datePopulator = (req, res) => {
     for (const [key, value] of Object.entries(dates)) {
       db.ref(`dates/${key}`).set(value);
     }
+    db.ref(`dateid`).set(0);
   } catch (error) {
     // Do nothing
     // eslint-disable-next-line no-console

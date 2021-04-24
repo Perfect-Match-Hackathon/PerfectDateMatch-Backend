@@ -35,9 +35,43 @@ const searchDate = (req, res) => {
 const createDate = (req, res) => {
   // eslint-disable-next-line no-empty
   try {
+    const date = {
+      title: null,
+      thumbnail: null,
+      people: null,
+      location: null,
+      description: null,
+      date: null,
+      authoricon: null,
+    };
+    Object.keys(date).forEach(key => {
+      if (!req.body[key]) {
+        throw new Error(`Empty ${key}`);
+      }
+      date[key] = req.body[key];
+    });
+
+    const db = admin.database();
+    let newid = 0;
+    db.ref('dateid').transaction(
+      dateid => {
+        newid = dateid + 1;
+        db.ref(`dates/${newid}`).set(date);
+        return newid;
+      },
+      (error, commited) => {
+        if (error) {
+          throw error;
+        } else if (!commited) {
+          throw new Error('Error creating date');
+        } else {
+          res.json({ success: true, dateid: newid });
+        }
+      },
+    );
   } catch (error) {
     res.status(500).send({
-      message: `Error creating date`,
+      message: `${error.message}`,
     });
   }
 };
@@ -55,7 +89,7 @@ const responseDate = (req, res) => {
             .set(req.params.response);
           res.json({ success: true });
         } else {
-          res.json({ success: false });
+          res.json({ success: false, message: 'Date does not exist.' });
         }
       });
   } catch (error) {

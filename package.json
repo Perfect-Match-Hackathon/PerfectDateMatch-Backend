@@ -4,6 +4,7 @@
   "description": "This project is created as a template for node.js web apps",
   "main": "src/server.js",
   "dependencies": {
+    "body-parser": "^1.19.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-firebase-middleware": "^3.0.0",
