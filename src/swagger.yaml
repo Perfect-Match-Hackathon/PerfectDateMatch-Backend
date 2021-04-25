@@ -1,0 +1,24 @@
+openapi: 3.0.0
+info:
+  title: Perfect Date Match API
+  description: Optional multiline or single-line description in HTML.
+  version: 1.1.5
+servers:
+  - url: https://perfectdatematch.herokuapp.com/
+    description: Perfect date match Production API endpoint
+  - url: http://localhost:8000/
+    description: Perfect date match Local API endpoint
+paths:
+  /users:
+    get:
+      summary: Returns a list of users.
+      description: Optional extended description in CommonMark or HTML.
+      responses:
+        '200': # status code
+          description: A JSON array of user names
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string

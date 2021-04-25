@@ -59,12 +59,9 @@ const createDate = (req, res) => {
     const date = {
       title: null,
       thumbnail: null,
-      people: null,
       location: null,
       description: null,
       date: null,
-      authorname: null,
-      authoricon: null,
     };
     Object.keys(date).forEach(key => {
       if (!req.body[key]) {

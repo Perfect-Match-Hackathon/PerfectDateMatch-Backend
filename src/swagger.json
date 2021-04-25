@@ -1,0 +1,93 @@
+{
+  "openapi": "3.0.o",
+  "info": {
+    "version": "1.1.5",
+    "title": "Perfect Date Match API",
+    "description": "Find out how your APIs work",
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://perfectmatchbackend.herokuapp.com/",
+      "description": "Perfect date match Production API endpoint"
+    },
+    { "url": "http://localhost:8000/", "description": "Perfect date match Local API endpoint" }
+  ],
+  "host": "localhost:8000",
+  "basePath": "/collections/",
+  "tags": [
+    {
+      "name": "Users",
+      "description": "API for users in the system"
+    }
+  ],
+  "schemes": ["http", "https"],
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
+  "securityDefinitions": {
+    "BearerAuth": {
+      "type": "http",
+      "scheme": "bearer"
+    }
+  },
+  "paths": {
+    "/users/login": {
+      "post": {
+        "summary": "Login user",
+        "tags": ["Users"],
+        "description": "Login user in system",
+        "parameters": [
+          {
+            "name": "user",
+            "in": "body",
+            "description": "Login user",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Login Success",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "401": {
+            "description": "Login details are not valid!!"
+          },
+          "404": {
+            "description": "Email is not registered!"
+          },
+          "500": {
+            "description": "User login failed!!"
+          }
+        }
+      }
+    }
+  },
+
+  "definitions": {
+    "User": {
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      }
+    },
+    "userEmail": {
+      "properties": {
+        "email": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
