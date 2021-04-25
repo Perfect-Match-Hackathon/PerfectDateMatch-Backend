@@ -28,7 +28,7 @@ const removematch = (updated, date, done) => {
 };
 
 const attemptmatch = (updated, date, done) => {
-  const listener = datematchref.on('value', snapshot => {
+  datematchref.once('value', snapshot => {
     if (!snapshot.hasChild(`${updated.key}/${date.key}`)) {
       let match;
       const { response } = date.val();
@@ -47,7 +47,6 @@ const attemptmatch = (updated, date, done) => {
         datematchref.child(`${match}/${date.key}`).set(updated.key);
       }
     }
-    datematchref.off('value', listener);
     done();
   });
 };
