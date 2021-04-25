@@ -68,3 +68,6 @@ dist/
 
 # Logger audit file
 .*-audit.json
+
+#VScode settings
+.vscode/
