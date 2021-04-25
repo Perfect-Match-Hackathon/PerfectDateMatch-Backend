@@ -4,11 +4,12 @@ const admin = require('firebase-admin');
 const dateref = admin.database().ref(`/dates`);
 
 const listDates = (req, res) => {
+  const { uid } = res.locals.user;
   dateref.once('value', val => {
     const dates = {};
     val.forEach(date => {
       const { response } = date.val();
-      if (!response) {
+      if (!response && !response[uid]) {
         const insert = date.val();
         delete insert.response;
         dates[date.key] = insert;
