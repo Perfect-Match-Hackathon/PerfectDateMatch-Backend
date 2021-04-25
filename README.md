@@ -6,7 +6,7 @@
 	<p>DateMatch</p>
 </h1>
 
-<h4 align="center">A open source tinder clone created for the <a href="#" target="_blank" alt="Link to skills me">SkillsMe</a> Perfect Match Hackathon</h4>
+<h4 align="center">A open source tinder like application created for the <a href="#" target="_blank" alt="Link to skills me">SkillsMe</a> Perfect Match Hackathon</h4>
 
 <p align="center">
         <img src="https://img.shields.io/badge/Express%20Version-%5E4.17.1-lightgrey" >
