@@ -69,6 +69,7 @@ const createDate = (req, res) => {
       location: null,
       description: null,
       date: null,
+      authorname: null,
       authoricon: null,
     };
     Object.keys(date).forEach(key => {
