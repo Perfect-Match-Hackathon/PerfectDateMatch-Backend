@@ -5,12 +5,10 @@ const dateref = admin.database().ref(`/dates`);
 
 const listDates = (req, res) => {
   dateref.once('value', val => {
-    const id = res.locals.user.uid;
-
     const dates = {};
     val.forEach(date => {
       const { response } = date.val();
-      if (!response || !response[id]) {
+      if (!response) {
         const insert = date.val();
         delete insert.response;
         dates[date.key] = insert;
@@ -59,12 +57,9 @@ const createDate = (req, res) => {
     const date = {
       title: null,
       thumbnail: null,
-      people: null,
       location: null,
       description: null,
       date: null,
-      authorname: null,
-      authoricon: null,
     };
     Object.keys(date).forEach(key => {
       if (!req.body[key]) {

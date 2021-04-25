@@ -1,6 +1,7 @@
 /* eslint-disable import/prefer-default-export */
 const admin = require('firebase-admin');
 
+// Save base references to save on duplicate code
 const datematchref = admin.database().ref(`/datematch`);
 const userref = admin.database().ref(`/users`);
 
