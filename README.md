@@ -26,19 +26,41 @@
 
 ## Demo
 
-// TODO: Record demo, upload demo to youtube (unlisted) & copy link here
+Swagger API Docs: <a href="https://perfectmatchbackend.herokuapp.com/api-docs/">https://perfectmatchbackend.herokuapp.com/api-docs/</a><br>
+Front end Demo: <a href="https://github.com/Perfect-Match-Hackathon/PerfectDateMatch-Frontend#demo">https://github.com/Perfect-Match-Hackathon/PerfectDateMatch-Frontend#demo</a>
 
 ## How To Use
 
-// TODO: write short introduction to application and instructions on how to use (with screenshots)
+Go to https://perfectdatematch.herokuapp.com/ create an accout / login.
+
+Click tick or deny to attend events that are displayed on the screen.<br />
+When you match with someone a notification will appear in the bottom left corner of your screen.<br />
+Clicking their name will allow you to visit their social media and contact them.
 
 ## Key Features
 
-// TOOD: Once finished, relay all key features into this area.
+<ul>
+<li>Automatically matches users on dates.</li>
+</ul>
 
 ## Local Instance
 
-// TODO: Once finished, write how to get a local instance up and running (dont forget firebase)
+```sh
+git clone https://github.com/Perfect-Match-Hackathon/PerfectDateMatch-Backend.git ./backend
+```
+
+and then
+
+```
+cd ./frontend && yarn;
+cp .env.example .env
+```
+
+then fill out the .env providing your firebase information and also the backend URL (make sure to include https:// at the start)
+
+```
+yarn start
+```
 
 ## License
 
