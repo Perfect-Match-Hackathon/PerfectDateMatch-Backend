@@ -28,28 +28,76 @@
   "consumes": ["application/json"],
   "produces": ["application/json"],
   "securityDefinitions": {
-    "BearerAuth": {
+    "bearerAuth": {
       "type": "http",
-      "scheme": "bearer"
+      "scheme": "bearer",
+      "bearerFormat": "JWT"
     }
   },
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
   "paths": {
-    "/users/login": {
+    "/collection/dates/response/{id}/{response}": {
       "post": {
-        "summary": "Login user",
-        "tags": ["Users"],
-        "description": "Login user in system",
+        "summary": "Date response",
+        "tags": ["Date"],
+        "description": "Respond to a date",
         "parameters": [
           {
-            "name": "user",
-            "in": "body",
-            "description": "Login user",
+            "name": "id",
+            "in": "path",
+            "description": "Date id",
             "schema": {
-              "$ref": "#/definitions/User"
+              "description": "integer"
+            }
+          },
+          {
+            "name": "response",
+            "in": "path",
+            "description": "Date response",
+            "schema": {
+              "description": "boolean"
             }
           }
         ],
         "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Responded successfully",
+            "schema": {
+              "properties": {
+                "success": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/definitions/responses/UnauthorizedError"
+          }
+        }
+      }
+    },
+    "/collection/dates/create": {
+      "post": {
+        "summary": "Create date",
+        "tags": ["Date"],
+        "description": "Create a new date",
+        "produces": ["application/json"],
+        "requestBody": {
+          "description": "Form data",
+          "required": true,
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/definitions/Date"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "Login Success",
@@ -58,20 +106,117 @@
             }
           },
           "401": {
-            "description": "Login details are not valid!!"
+            "$ref": "#/definitions/responses/UnauthorizedError"
+          }
+        }
+      }
+    },
+    "/collection/dates": {
+      "get": {
+        "summary": "Retrieve availanle dates",
+        "tags": ["Date"],
+        "description": "Retrieve available dates for the user",
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Array of dates",
+            "schema": {
+              "items": {
+                "$ref": "#/definitions/Date"
+              }
+            }
           },
-          "404": {
-            "description": "Email is not registered!"
+          "401": {
+            "$ref": "#/definitions/responses/UnauthorizedError"
+          }
+        }
+      }
+    },
+    "/collection/dates/list": {
+      "get": {
+        "summary": "Retrieve accepted dates",
+        "tags": ["Date"],
+        "description": "Retrieve accepted dates for the user",
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Array of dates",
+            "schema": {
+              "items": {
+                "$ref": "#/definitions/Date"
+              }
+            }
           },
-          "500": {
-            "description": "User login failed!!"
+          "401": {
+            "$ref": "#/definitions/responses/UnauthorizedError"
+          }
+        }
+      }
+    },
+    "/collection/dates/{id}": {
+      "get": {
+        "summary": "Retrieve date",
+        "tags": ["Date"],
+        "description": "Retrieve all information about the date",
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Date",
+            "schema": {
+              "$ref": "#/definitions/Date"
+            }
+          },
+          "401": {
+            "$ref": "#/definitions/responses/UnauthorizedError"
+          }
+        }
+      }
+    },
+    "/collection/datematch/{id}": {
+      "get": {
+        "summary": "Retrieve datematch",
+        "tags": ["Date Match"],
+        "description": "Retrieve information about a specific date match",
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Date",
+            "schema": {
+              "$ref": "#/definitions/Date"
+            }
+          },
+          "401": {
+            "$ref": "#/definitions/responses/UnauthorizedError"
           }
         }
       }
     }
   },
-
   "definitions": {
+    "responses": {
+      "UnauthorizedError": {
+        "description": "Access token is missing or invalid"
+      }
+    },
+    "Date": {
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "thumbnail": {
+          "type": "string"
+        },
+        "location": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "date": {
+          "type": "integer"
+        }
+      }
+    },
     "User": {
       "properties": {
         "email": {
