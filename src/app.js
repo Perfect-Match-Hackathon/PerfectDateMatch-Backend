@@ -1,8 +1,8 @@
 /* eslint-disable import/prefer-default-export */
 import express from 'express';
 import helmet from 'helmet';
+import cors from 'cors';
 import routes from './routes';
-import cors from "cors"
 
 const app = express();
 
