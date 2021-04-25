@@ -28,26 +28,27 @@ const removematch = (updated, date, done) => {
 };
 
 const attemptmatch = (updated, date, done) => {
-  const listener = datematchref.on('value', snapshot => {
+  datematchref.once('value', snapshot => {
     if (!snapshot.hasChild(`${updated.key}/${date.key}`)) {
       let match;
       const { response } = date.val();
-      Object.keys(response).every(value => {
-        if (value !== updated.key && response[value]) {
-          if (!snapshot.hasChild(`${value}/${date.key}`)) {
-            match = value;
-            return false;
+      if (response) {
+        Object.keys(response).every(value => {
+          if (value !== updated.key && response[value]) {
+            if (!snapshot.hasChild(`${value}/${date.key}`)) {
+              match = value;
+              return false;
+            }
           }
-        }
-        return true;
-      });
+          return true;
+        });
+      }
       if (match) {
         console.log(`Matched ${updated.key} with ${match}`);
         datematchref.child(`${updated.key}/${date.key}`).set(match);
         datematchref.child(`${match}/${date.key}`).set(updated.key);
       }
     }
-    datematchref.off('value', listener);
     done();
   });
 };
