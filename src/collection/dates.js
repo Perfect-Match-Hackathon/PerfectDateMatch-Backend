@@ -9,7 +9,7 @@ const listDates = (req, res) => {
     const dates = {};
     val.forEach(date => {
       const { response } = date.val();
-      if (!response || !response[uid]) {
+      if (!response || !(uid in response)) {
         const insert = date.val();
         delete insert.response;
         dates[date.key] = insert;
