@@ -11,7 +11,7 @@
 <p align="center">
         <img src="https://img.shields.io/badge/Express%20Version-%5E4.17.1-lightgrey" >
         <img src="https://img.shields.io/github/package-json/v/Perfect-Match-Hackathon/PerfectDateMatch-Backend/master?label=Stable%20Version&color=blueviolet">
-        <img src="https://img.shields.io/github/package-json/v/Perfect-Match-Hackathon/PerfectDateMatch-Backend/date-cards?label=Next%20Version&color=lightgrey">
+        <img src="https://img.shields.io/github/package-json/v/Perfect-Match-Hackathon/PerfectDateMatch-Backend/docs?label=Next%20Version&color=lightgrey">
 
 </p>
 
